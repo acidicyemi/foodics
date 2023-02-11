@@ -1,0 +1,56 @@
+version: "3.9"
+
+services:
+  foodics_nginx:
+    container_name: foodics_nginx
+    image: nginx:1.21.3-alpine
+    restart: unless-stopped
+    ports: 
+      - ${WEBSERVER_PORT?err}:80
+    depends_on:
+      - foodics_mysql
+      - foodics_php
+    networks:
+      - foodics_network
+    volumes:
+      - ./:/var/www/html
+      - .docker/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+
+  foodics_mysql:
+    image: mysql:8.0.26
+    container_name: foodics_mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    tty: true
+    ports:
+      - ${DB_PORT_OUTSIDE?err}:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD?err}
+      MYSQL_PASSWORD: ${DB_PASSWORD?err}
+    networks:
+      - foodics_network
+    volumes:
+      - .docker/mysql/setup.sql:/docker-entrypoint-initdb.d/setup.sql
+      - .docker/mysql/my.conf:/etc/my.cnf
+      - foodics_mysql:/var/lib/mysql
+
+  foodics_php:
+    build:
+      context: .
+      dockerfile: .docker/php/Dockerfile
+    ports: 
+      - ${APP_PORT?err}:9000
+    container_name: foodics_php
+    restart: unless-stopped
+    networks:
+      - foodics_network
+    volumes: 
+      - .:/var/www/html
+
+volumes:
+  foodics_mysql:
+    external: true
+
+networks:
+  foodics_network:
+    external: true
