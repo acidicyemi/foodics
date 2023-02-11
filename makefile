@@ -2,7 +2,7 @@ start:
 	docker-compose up -d
 
 bash:
-	docker-compose exec foodicd_php sh
+	docker-compose exec foodics_php sh
 
 setup:
 	docker network create foodics_network && \

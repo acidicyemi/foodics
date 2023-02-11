@@ -30,7 +30,7 @@ services:
     networks:
       - foodics_network
     volumes:
-      - .docker/mysql/setup.sql:/docker-entrypoint-initdb.d/setup.sql
+      - .docker/mysql/data:/docker-entrypoint-initdb.d
       - .docker/mysql/my.conf:/etc/my.cnf
       - foodics_mysql:/var/lib/mysql
 
