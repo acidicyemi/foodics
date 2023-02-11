@@ -19,7 +19,7 @@ class CreateIngredientsTable extends Migration
             $table->integer("current_weight_in_grams");
             $table->integer("initial_weight_in_grams");
             $table->boolean("mail_sent")->default(false);
-            $table->timestampsTz("last_refilled");
+            $table->timestamp("last_refilled");
             // can also have total processed ingredients
             $table->softDeletes();
             $table->timestamps();
