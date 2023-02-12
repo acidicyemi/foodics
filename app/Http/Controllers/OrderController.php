@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewOrderProcessed;
+use App\Http\Services\OrderService;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\AcceptOrderRequest;
-use App\Http\Services\OrderService;
 
 class OrderController extends Controller
 {
@@ -27,8 +28,7 @@ class OrderController extends Controller
         // log order
 
         // emit event 
-        
-        // process event
+        NewOrderProcessed::dispatch($request->products);
 
         return json_response("order processing", 200);
     }
