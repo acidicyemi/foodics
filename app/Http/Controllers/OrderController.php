@@ -24,10 +24,8 @@ class OrderController extends Controller
             return json_response("unable to fulfil order", 400);
         }
         
-        
-
         // emit event 
 
-        return json_response("success");
+        return json_response("order processing", 200);
     }
 }

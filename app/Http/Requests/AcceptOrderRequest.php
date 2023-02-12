@@ -23,10 +23,9 @@ class AcceptOrderRequest extends FormRequest
      */
     public function rules()
     {
-        // dd($this->products);
         return [
             "products.*.product_id" => ["required", "numeric", "exists:products,id"],
-            "products.*.quantity" => ["required", "numeric", "min:1"]
+            "products.*.quantity" => ["required", "numeric", "min:1"] // set a max base on business decision
         ];
     }
 }
