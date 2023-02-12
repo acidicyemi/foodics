@@ -23,12 +23,12 @@ class IngredientSeeder extends Seeder
         ];
 
         foreach ($ingredients as $ingredient) {
-            $t = Ingredient::firstOrNew(["name" => $ingredient["name"]]);
-            $t->current_weight_in_grams = $ingredient["current_weight"];
-            $t->initial_weight_in_grams = $ingredient["initial_weight"];
-            $t->mail_sent = false;
-            $t->last_refilled = now();
-            $t->save();
+            $i = Ingredient::firstOrNew(["name" => $ingredient["name"]]);
+            $i->current_weight_in_grams = $ingredient["current_weight"];
+            $i->initial_weight_in_grams = $ingredient["initial_weight"];
+            $i->mail_sent = false;
+            $i->last_refilled = now();
+            $i->save();
         }
     }
 }

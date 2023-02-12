@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreOrderRequest extends FormRequest
+class AcceptOrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class StoreOrderRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,10 @@ class StoreOrderRequest extends FormRequest
      */
     public function rules()
     {
+        // dd($this->products);
         return [
-            //
+            "products.*.product_id" => ["required", "numeric", "exists:products,id"],
+            "products.*.quantity" => ["required", "numeric", "min:1"]
         ];
     }
 }
