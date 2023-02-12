@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 class OrderService
 {
 
-    public function validateIngredientWeight(array $products)
+    public function validateAndProcessIngredient(array $products)
     {
         try {
 
@@ -19,7 +19,7 @@ class OrderService
 
             foreach ($products as $product) {
 
-                $productIngredients = Product::find(["id" => $product["product_id"]])->first()->ingredients;
+                $productIngredients = Product::find(["id" => $product["product_id"]])->first()->ingredients()->lockForUpdate()->get();
 
                 $productIngredients->map(function ($ingredient) use ($product) {
                     $ingredientWeight = ($ingredient->pivot->ingredient_weight) * $product["quantity"];
@@ -51,5 +51,4 @@ class OrderService
             ];
         }
     }
-
 }

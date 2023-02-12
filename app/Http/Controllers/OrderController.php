@@ -17,14 +17,18 @@ class OrderController extends Controller
 
     public function accepts(AcceptOrderRequest $request)
     {
-        $res = $this->order->validateIngredientWeight($request->products);
+        $res = $this->order->validateAndProcessIngredient($request->products);
 
         if (!$res["status"]) {
             Log::info("unable to fulfil order", ["method" => "OrderController::accepts", "reason" => "insufficient ingredient to fulfil order"]);
             return json_response("unable to fulfil order", 400);
         }
-        
+
+        // log order
+
         // emit event 
+        
+        // process event
 
         return json_response("order processing", 200);
     }
