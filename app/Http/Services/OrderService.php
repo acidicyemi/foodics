@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Models\Order;
 use Exception;
 use Throwable;
 use App\Models\Product;
@@ -49,7 +50,6 @@ class OrderService
                 "status" => true,
                 "data" => $isHalf,
             ];
-
         } catch (Throwable $th) {
             DB::rollBack();
             Log::error("insufficient ingredient to fulfil order", ["method" => "OrderService::validateIngredientWeight", "error" => $th->getMessage()]);
@@ -57,6 +57,17 @@ class OrderService
                 "status" => false,
                 "data" => $th->getMessage(),
             ];
+        }
+    }
+
+    public function storeOrder($products)
+    {
+        try {
+            $order = new Order;
+            $order->products = json_encode($products);
+            $order->save();
+        } catch (Throwable $th) {
+            Log::critical("unable to save order to db", ["method" => "OrderService::storeOrder", "error" => $th->getMessage()]);
         }
     }
 }

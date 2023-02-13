@@ -26,6 +26,7 @@ class OrderController extends Controller
         }
 
         // log order
+        $this->order->storeOrder($request->products);
 
         // emit event 
         NewOrderProcessed::dispatch($request->products, $res["data"]);
