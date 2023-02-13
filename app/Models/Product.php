@@ -11,6 +11,7 @@ class Product extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $guarded = [];
     /**
      * Get all of the ingredients for the Product
      *

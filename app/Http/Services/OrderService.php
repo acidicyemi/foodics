@@ -37,7 +37,7 @@ class OrderService
                         $ingredient->save();
 
                         // check if ingredient initial_weight_in_grams/2 is less or greater ingredient current_weight_in_grams
-                        if (($ingredient->initial_weight_in_grams / 2) > $ingredient->current_weight_in_grams) {
+                        if (($ingredient->initial_weight_in_grams / 2) >= $ingredient->current_weight_in_grams) {
                             array_push($isHalf, $ingredient->id);
                         }
                     }
