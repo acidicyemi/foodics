@@ -19,13 +19,13 @@ To run this project,you will need docker up and running. clean up command are ad
 #### Clone the project
 
 ```bash
-  git clone https://link-to-project
+  git clone git@github.com:acidicyemi/foodics.git
 ```
 
 #### Go to the project directory
 
 ```bash
-  cd my-project
+  cd foodics
 ```
 
 #### Create the required docker setup
