@@ -28,7 +28,7 @@ class OrderController extends Controller
         // log order
 
         // emit event 
-        NewOrderProcessed::dispatch($request->products);
+        NewOrderProcessed::dispatch($request->products, $res["data"]);
 
         return json_response("order processing", 200);
     }

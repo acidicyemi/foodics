@@ -3,11 +3,13 @@
 namespace App\Listeners;
 
 use App\Events\NewOrderProcessed;
+use App\Http\Services\IngredientService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class SendNotificationMail
+class SendNotificationMail implements ShouldQueue
 {
+    use InteractsWithQueue;
     /**
      * Create the event listener.
      *
@@ -27,9 +29,9 @@ class SendNotificationMail
     public function handle(NewOrderProcessed $event)
     {
         $products = $event->products;
-        
-        // check if should send email
+        $ingredientsId = (array) $event->ingredientsId;
 
-                
+        $iService = new IngredientService;
+        $iService->processMailNotification($ingredientsId);
     }
 }

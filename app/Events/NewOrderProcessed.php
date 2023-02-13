@@ -15,14 +15,17 @@ class NewOrderProcessed
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $products;
+    public $ingredientsId;
+
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(array $products)
+    public function __construct(array $products, $ingredientsId)
     {
         $this->products = $products;
+        $this->ingredientsId = array_unique($ingredientsId);
     }
 
     /**
