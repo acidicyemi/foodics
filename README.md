@@ -1,5 +1,5 @@
 
-# Project Title
+# FOODICS
 
 This is Foodics test application. Note: This is not a fully production ready application.
 
