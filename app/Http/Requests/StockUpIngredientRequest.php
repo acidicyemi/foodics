@@ -24,7 +24,7 @@ class StockUpIngredientRequest extends FormRequest
     public function rules()
     {
         return [
-            "products" => ["required", "array"],
+            "ingredients" => ["required", "array"],
             "ingredients.*.ingredient_id" => ["required", "exists:ingredients,id"],
             "ingredients.*.weight_in_grams" => ["required", "min:1"],
         ];
