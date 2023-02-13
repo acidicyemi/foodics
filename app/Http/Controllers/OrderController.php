@@ -21,7 +21,7 @@ class OrderController extends Controller
         $res = $this->order->validateAndProcessIngredient($request->products);
 
         if (!$res["status"]) {
-            Log::info("unable to fulfil order", ["method" => "OrderController::accepts", "reason" => "insufficient ingredient to fulfil order"]);
+            Log::info("unable to fulfil order", ["method" => "OrderController::accepts", "reason" => "insufficient ingredient to fulfil order", "error" => $res["data"]]);
             return json_response("unable to fulfil order", 400);
         }
 

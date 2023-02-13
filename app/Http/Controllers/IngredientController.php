@@ -2,85 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreIngredientRequest;
-use App\Http\Requests\UpdateIngredientRequest;
-use App\Models\Ingredient;
+use App\Http\Requests\StockUpIngredientRequest;
+use App\Http\Services\IngredientService;
 
 class IngredientController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public $ingredientService;
+
+    public function __construct(IngredientService $ingredientService)
     {
-        //
+        $this->ingredientService = $ingredientService;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function stockup(StockUpIngredientRequest $request)
     {
-        //
-    }
+        $res = $this->ingredientService->stockUpIngredients($request->ingredients);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreIngredientRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreIngredientRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Ingredient  $ingredient
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Ingredient $ingredient)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Ingredient  $ingredient
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Ingredient $ingredient)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateIngredientRequest  $request
-     * @param  \App\Models\Ingredient  $ingredient
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateIngredientRequest $request, Ingredient $ingredient)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Ingredient  $ingredient
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Ingredient $ingredient)
-    {
-        //
+        if (!$res["status"]) {
+            return json_response("unable to stockup", 400, ["error" => $res["data"]]);
+        }
+        return json_response("ingredients added successfully");
     }
 }
